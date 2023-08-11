@@ -20,6 +20,8 @@ using word_t = decltype( ptrace(PTRACE_TRACEME, 0, 0, 0) );
 // i don't know why i use static in header files
 static inline word_t peek_word(pid_t pid, __ptrace_request peek_request, const void *src){
     // a hack since check_errno deduces int_type from function type
+    // and there is something going wrong when trying to deduce template parameters of a lambda
+    // it's not good to construct a lambda everytime, whatever
     std::function<word_t()> peekfn = [&](){
         return ptrace(peek_request, pid, src, 0);
     };

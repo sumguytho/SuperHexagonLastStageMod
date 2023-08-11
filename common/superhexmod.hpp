@@ -35,11 +35,11 @@ inline common::ProgramModification steam_linux64_8838351(){
     // this is the only data modification in the entire modifications set
     // instead of a minute, substract / add 133.(3) seconds, this is the
     // point after which the game does the spin thing every 5 waves and the
-    // last point after which nothing changes in game logic, it's just easier
+    // last point after which something changes in game logic, it's just easier
     // than doing all the other modifications
     result.add_patch(make_addr(0x55a290), bit_cast<uint32_t>(3600.f), bit_cast<uint32_t>(8000.f), true);
     // set initial value added to camera_rotation_type to 8
-    // inital one for hypermode is 4, its value then makes the hexagon spin
+    // inital one for hypermode is 4, its value then makes the hexagon spin and
     // change direction from time to time, it's set in gameinput and then changed
     // in gamelogic, although some time will pass until it's changed in gamelogic
     // meaning it would spin in some direction for some time were this modification
@@ -63,7 +63,7 @@ inline common::ProgramModification steam_linux64_8838351(){
     // the second one checks whether hypermode_switch is set to 1
     result.add_patch(make_addr(0x44fd8b), { 0x75, 0x0d }, { 0x90, 0x90 });
     result.add_patch(make_addr(0x44fd94), { 0x0f, 0x85 }, { 0x48, 0xe9 });
-    #ifdef TEST_PATCH
+    #ifdef SUPERHEX_INVULN
         result.add_patch(make_addr(0x471014), uint8_t{0x7e}, uint8_t{0xeb});
     #endif
     return result;
@@ -99,7 +99,7 @@ inline common::ProgramModification steam_windows32_8838351(){
     // make text in stage select black
     result.add_patch(make_addr(0x40e567), { 0x0f, 0x85, 0xb5, 0x00, 0x00, 0x00 }, { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
     result.add_patch(make_addr(0x40e574), { 0x0f, 0x85, 0xa8, 0x00, 0x00, 0x00 }, { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
-    #ifdef TEST_PATCH
+    #ifdef SUPERHEX_INVULN
         result.add_patch(make_addr(0x429a0c), { 0x0f, 0x8e, 0xfd, 0x00, 0x00, 0x00 }, { 0xe9, 0xfe, 0x00, 0x00, 0x00, 0x90 });
     #endif
     return result;

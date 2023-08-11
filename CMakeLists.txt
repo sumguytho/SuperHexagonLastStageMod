@@ -8,11 +8,11 @@ enable_testing()
 string(TOLOWER ${CMAKE_SYSTEM_NAME} PlatformDir)
 option(MAKE_EXAMPLE "\
 Compile a small example application that demonstrates ProgramModification \
-class usage alongside the main application" ON)
-option(TEST_PATCH "A patch that enables testing" OFF)
+class usage alongside the main application" OFF)
+option(SUPERHEX_INVULN "Invulnerability for testing purposes" OFF)
 
-if (TEST_PATCH)
-   add_definitions(-DTEST_PATCH=1)
+if (SUPERHEX_INVULN)
+   add_definitions(-DSUPERHEX_INVULN=1)
 endif()
 
 if(MSVC)
